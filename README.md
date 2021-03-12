@@ -138,6 +138,17 @@ the root directory (Eg `tornado_handlers.py`). Then to make sure the same module
 is only loaded once, we use `import xy` instead of `import plot_app.xy`.
 It's useful to look at `print('\n'.join(sys.modules.keys()))` to check this.
 
+# Docker Usage
+Please modify the .env and app/config_default.ini or add app/config_user.ini with respective stages
+
+```bash
+# Development
+docker-compose -f docker-compose.dev.yml
+# Test in local
+docker-compose up
+# Production
+docker-compose -f docker-compose.dev.yml
+```
 
 ## Contributing
 Contributions are welcome! Just open a pull request with detailed description
