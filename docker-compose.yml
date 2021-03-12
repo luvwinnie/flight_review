@@ -1,20 +1,25 @@
 version: "3.3"
 services:
-  # nginx:
-  #   image: nginx
   srv:
     # image: px4flightreview
     build:
       context: ./app
       dockerfile: Dockerfile
     restart: always
-    network_mode: bridge
-    ports:
-      - 5006:5006
-    environment:
-      USE_PROXY: "True"
-      # PORT: "5006"
-      # DOMAIN: "test.ru"
+    env_file: .env
     volumes:
-      - ./data:/opt/service/data
-      - ./app/config_default.ini:/opt/service/config_default.ini:ro
+      - ./data/app_data:/opt/service/data
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+      args:
+        - TZ=${TZ}
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - srv
+    depends_on:
+      - srv
+
