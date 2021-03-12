@@ -1,6 +1,6 @@
 version: "3.3"
 services:
-  srv:
+  flight_review_app:
     # image: px4flightreview
     build:
       context: ./app
@@ -19,7 +19,7 @@ services:
       - 80:80
       - 443:443
     links:
-      - srv
+      - flight_review_app
     depends_on:
-      - srv
+      - flight_review_app
 
