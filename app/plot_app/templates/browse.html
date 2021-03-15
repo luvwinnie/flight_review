@@ -56,7 +56,7 @@
         "search": {{ initial_search }}
         },
         {% endif %}
-        "order": [[0, 'desc']],
+        "order": [[1, 'desc']],
         "ordering": true,
         "lengthMenu": [10, 25, 50, 75, 100],
 
@@ -85,7 +85,6 @@
     });
     var table = $('#logs_table').DataTable();
     table.on('xhr', function () {
-
         try {
             var table = $('#logs_table').DataTable();
             var search_term = table.search();
