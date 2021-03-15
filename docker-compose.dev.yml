@@ -4,14 +4,11 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
-    restart: always
-    network_mode: bridge
+    env_file: .env
     ports:
      - 5006:5006
-    env_file: .env
-    command: /opt/service/run.sh
     volumes:
       - ./app:/opt/service/
       - ./data:/opt/service/data
-      # Absolute for volume a file.
-      - ${PWD}/config_default.ini:/opt/service/config_default.ini:ro
+      - ${PWD}/config_default.ini:/opt/service/config_default.ini:ro # Absolute for volume a file.
+    restart: always

@@ -1,5 +1,3 @@
 FROM nginx
-ARG TZ
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-COPY ./default.conf /etc/nginx/conf.d/default.conf
+ARG NGINX_CONF
+COPY ./${NGINX_CONF} /etc/nginx/conf.d/default.conf

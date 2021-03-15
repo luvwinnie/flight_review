@@ -5,17 +5,20 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
-    restart: always
     env_file: .env
     volumes:
       - ./data:/opt/service/data
-      - ${PWD}/config_default.ini:/opt/service/config_default.ini:ro
+      - ${PWD}/config_default.ini:/opt/service/config_default.ini:ro # Absolute for volume a file.
+    restart: always
   nginx:
     build:
       context: ./nginx
       dockerfile: Dockerfile
       args:
-        - TZ=${TZ}
+        - NGINX_CONF=${NGINX_CONF}
+    env_file: .env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro # for synchronize with host timezone
     ports:
       - 80:80
       - 443:443
@@ -23,4 +26,5 @@ services:
       - flight_review_app
     depends_on:
       - flight_review_app
+    restart: always
 
