@@ -3,7 +3,7 @@ services:
   flight_review_app:
     build:
       context: ./app
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     restart: always
     network_mode: bridge
     ports:
@@ -12,4 +12,6 @@ services:
     command: /opt/service/run.sh
     volumes:
       - ./app:/opt/service/
-      - ./data/app_data:/opt/service/data
+      - ./data:/opt/service/data
+      # Absolute for volume a file.
+      - ${PWD}/config_default.ini:/opt/service/config_default.ini:ro

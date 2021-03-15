@@ -9,8 +9,9 @@ services:
     env_file: .env
     volumes:
       - ./data:/opt/service/data
-      - ./app/config_default.ini:/opt/service/config_default.ini:ro
-      - ./app/config_user.ini:/opt/service/config_user.ini:ro
+      # Absolute for volume a file.
+      - ${PWD}/config_default.ini:/opt/service/config_default.ini:ro
+      - ${PWD}/config_user.ini:/opt/service/config_user.ini:ro
   certbot:
     image: certbot/certbot
     volumes:

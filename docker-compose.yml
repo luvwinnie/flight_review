@@ -8,7 +8,8 @@ services:
     restart: always
     env_file: .env
     volumes:
-      - ./data/app_data:/opt/service/data
+      - ./data:/opt/service/data
+      - ${PWD}/config_default.ini:/opt/service/config_default.ini:ro
   nginx:
     build:
       context: ./nginx
