@@ -12,12 +12,12 @@ jobs:
     if: github.ref == 'refs/heads/sel_branch'
     runs-on: ubuntu-latest
     steps:
-      - name:
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.PRIVATE_KEY }}
-          name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: "Add GitHub to the SSH known hosts file"
+        run: |
+          for ip in $(dig @8.8.8.8 github.com +short); do \
+            ssh-keyscan github.com,$ip; \
+            ssh-keyscan $ip; \
+          done 2>/dev/null >> ~/.ssh/known_hosts
       - name: Deploy
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
