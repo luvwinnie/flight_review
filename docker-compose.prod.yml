@@ -23,8 +23,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
       - ./logs/nginx:/var/log/nginx/
       - ${PWD}/nginx/.htpasswd:/etc/nginx/.htpasswd # for nginx basic authentication
       - /etc/localtime:/etc/localtime:ro # for synchronize with host timezone
@@ -39,8 +39,8 @@ services:
       context: ./letsencrypt
       dockerfile: Dockerfile
     volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
       - ./logs/letsencrypt:/var/log/letsencrypt
       - /etc/localtime:/etc/localtime:ro # for synchronize with host timezone
     entrypoint: "/bin/sh -c 'trap exit TERM; crond -f'"
