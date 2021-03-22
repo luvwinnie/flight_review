@@ -11,13 +11,13 @@ domain=${DOMAIN} # www.${DOMAIN})
 rsa_key_size=4096
 cert_path=${CERT_PATH}
 email=${EMAIL} # Adding a valid address is strongly recommended
-staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
+staging=1 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 if [ -d "$cert_path" ]; then
-  read -p "Existing data found for $domain. Continue and replace existing certificate? (y/N) " decision
-  if [ "$decision" != "Y" ] && [ "$decision" != "y" ]; then
-    exit
-  fi
+  # read -p "Existing data found for $domain. Continue and replace existing certificate? (y/N) " decision
+  docker-compose -f docker-compose.prod.yml down
+  docker-compose -f docker-compose.prod.yml up -d
+  exit
 fi
 
 
@@ -81,5 +81,4 @@ echo
 
 echo "### Reloading nginx ..."
 docker-compose -f docker-compose.prod.yml exec nginx nginx -s reload
-docker-compose -f docker-compose.prod.yml build certbot
-docker-compose -f docker-compose.prod.yml up -d
+# docker-compose -f docker-compose.prod.yml up -d
