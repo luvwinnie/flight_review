@@ -13,7 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add CI SSH Key
-        run: ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
+        run: |
+          eval `ssh-agent -s`
+          ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
       - name: Deploy
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
