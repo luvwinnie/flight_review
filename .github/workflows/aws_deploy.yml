@@ -22,6 +22,11 @@ jobs:
           HOST_NAME: ${{ secrets.HOST_NAME }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           ENV_PROD: ${{ secrets.ENV_PROD }}
+          DOMAIN: ${{ secrets.DOMAIN }}
+          PORT: ${{ secrets.PORT }}
+          CERT_PATH: ${{ secrets.CERT_PATH }}
+          USE_PROXY: ${{ secrets.USE_PROXY }}
+          NGINX_CONF: ${{ secrets.NGINX_CONF }}
         run: |
           echo "$SECRET_KEY" > secret_key
           echo "$ENV_PROD" > .env_prod
