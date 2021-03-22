@@ -12,12 +12,8 @@ jobs:
     if: github.ref == 'refs/heads/sel_branch'
     runs-on: ubuntu-latest
     steps:
-      - name: "Add GitHub to the SSH known hosts file"
-        run: |
-          for ip in $(dig @8.8.8.8 github.com +short); do \
-            ssh-keyscan github.com,$ip; \
-            ssh-keyscan $ip; \
-          done 2>/dev/null >> ~/.ssh/known_hosts
+      - name: Add CI SSH Key
+        run: ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
       - name: Deploy
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
