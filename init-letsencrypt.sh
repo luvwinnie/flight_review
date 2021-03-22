@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose -f docker-compose.prod.yml)" ]; then
   exit 1
 fi
 
-export $(cat .env | grep -v ^\# | xargs); # get variable from .env file
+export $(cat .env_prod | grep -v ^\# | xargs); # get variable from .env file
 
 domain=(${DOMAIN} www.${DOMAIN})
 rsa_key_size=4096
@@ -58,7 +58,7 @@ domain_args=""
 for domain in "${domain[@]}"; do
   domain_args="$domain_args -d $domain"
 done
-
+echo $domain_args
 # Select appropriate email arg
 case "$email" in
   "") email_arg="--register-unsafely-without-email" ;;
