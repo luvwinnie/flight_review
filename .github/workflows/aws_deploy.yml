@@ -33,5 +33,6 @@ jobs:
           ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && git checkout sel_branch && git pull origin sel_branch"
           ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && docker-compose -f docker-compose.prod.yml down"
           ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && docker-compose -f docker-compose.prod.yml build --no-cache"
+      - name: Start Docker container
           ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && chmod u+x ./init-letsencrypt.sh"
           ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && ./init-letsencrypt.sh"
