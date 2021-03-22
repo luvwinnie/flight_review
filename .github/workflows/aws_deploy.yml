@@ -12,15 +12,18 @@ jobs:
     if: github.ref == 'refs/heads/sel_branch'
     runs-on: ubuntu-latest
     steps:
+      - name: Public IP
+        id: ip
+        uses: haythem/public-ip@v1.2
+
       - uses: actions/checkout@v2
-        with:
-            ssh-key: ${{ secrets.PRIVATE_KEY }}
       - name: Deploy
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           USER_NAME: ${{ secrets.USER_NAME }}
           HOST_NAME: ${{ secrets.HOST_NAME }}
         run: |
+          IP_ADDRESS=`echo ${{ steps.ip.outputs.ipv4 }}`
           # echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           # ssh -o StrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i private_key ${USER_NAME}@${HOST_NAME}
           ssh -o StrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} ${USER_NAME}@${HOST_NAME}
