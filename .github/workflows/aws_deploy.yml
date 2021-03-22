@@ -15,13 +15,13 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "$PRIVATE_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
+          echo "$PRIVATE_KEY" > ~/.ssh/deploy.key
+          chmod 600 ~/.ssh/deploy.key
           cat >>~/.ssh/config <<END
-          Host staging
+          Host ${HOST_NAME}
             HostName $HOST_NAME
             User $SSH_USER
-            IdentityFile ~/.ssh/staging.key
+            IdentityFile ~/.ssh/deploy.key
             StrictHostKeyChecking no
           END
         env:
