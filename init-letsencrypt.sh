@@ -14,7 +14,7 @@ email=${EMAIL} # Adding a valid address is strongly recommended
 staging=1 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 if [ -d "$cert_path" ]; then
-  # read -p "Existing data found for $domain. Continue and replace existing certificate? (y/N) " decision
+  # すでに証明証がある場合、コンテナーのみ再起動する
   docker-compose -f docker-compose.prod.yml down
   docker-compose -f docker-compose.prod.yml up -d
   exit
