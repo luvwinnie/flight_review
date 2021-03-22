@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose -f docker-compose.prod.yml)" ]; then
   exit 1
 fi
 
-export $(cat .env_prod | grep -v ^\# | xargs); # get variable from .env file
+export $(cat .env | grep -v ^\# | xargs); # get variable from .env file
 
 domain=${DOMAIN} # www.${DOMAIN})
 rsa_key_size=4096
