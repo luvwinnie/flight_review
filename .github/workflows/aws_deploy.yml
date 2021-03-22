@@ -42,7 +42,7 @@ jobs:
           # SSH接続して、git pullする
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME} '
-          cd /home/ec2-user/flight_review &&
+          cd /home/${USER_NAME}/flight_review &&
           git checkout sel_branch &&
           git fetch --all &&
           echo "Done fetch"
