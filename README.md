@@ -188,6 +188,8 @@ Remember to Change NGINX_CONF to use default_ssl.conf and add the EMAIL for prod
 
 ### Production
 ```bash
+htpasswd -c ./nginx/.htpasswd username
+# here to create a .htpasswd for nginx basic authentication
 chmod u+x init-letsencrypt.sh
 ./init-letsencrypt.sh
 ```
