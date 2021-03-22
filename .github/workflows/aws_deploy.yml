@@ -12,10 +12,9 @@ jobs:
     if: github.ref == 'refs/heads/sel_branch'
     runs-on: ubuntu-latest
     steps:
-      - name: Add CI SSH Key
-        run: |
-          eval `ssh-agent -s`
-          ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
+      - uses: actions/checkout@v2
+        with:
+            ssh-key: ${{ secrets.PRIVATE_KEY }}
       - name: Deploy
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
@@ -24,7 +23,7 @@ jobs:
         run: |
           # echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           # ssh -o StrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i private_key ${USER_NAME}@${HOST_NAME}
-          ssh ${USER_NAME}@${HOST_NAME} ${USER_NAME}@${HOST_NAME}
+          ssh -o StrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} ${USER_NAME}@${HOST_NAME}
           ls
         
       #     # SSH接続して、git pullする
