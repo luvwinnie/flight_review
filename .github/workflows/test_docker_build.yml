@@ -3,7 +3,7 @@ name: Run Docker Build Tests
 on:
   push:
     branches:
-    - 'master'
+    - ['master','sel_branch']
   pull_request:
     branches:
     - '*'

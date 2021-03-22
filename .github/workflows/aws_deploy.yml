@@ -1,8 +1,6 @@
 name: Deployment
 
 on:
-  push:
-    branches: [sel_branch]
   pull_request:
     branches:
     - 'sel_branch'
@@ -16,27 +14,14 @@ jobs:
       - uses: actions/checkout@v2
       - name: Deploy
         env:
-          # PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           USER_NAME: ${{ secrets.USER_NAME }}
           HOST_NAME: ${{ secrets.HOST_NAME }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           echo "$SECRET_KEY" > secret_key
           chmod 600 secret_key
+          # SSH接続して、git pullする
           ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && git pull origin sel_branch"
           docker-compose down
           docker-compose build --no-cache
           docker-compose up -d
-          # ls
-          # ssh -i ~/.ssh/deploy.key ${USER_NAME}@${HOST_NAME}
-          # ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME}
-        
-      #     # SSH接続して、git pullする
-      #     echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-      #     cd /home/${USER_NAME}/flight_review &&
-      #     git checkout sel_branch &&
-      #     git fetch --all &&
-      #     echo "Done fetch"
-      #     # git reset --hard origin/sel_branch &&
-      #     # git pull origin master
-      #     # 
