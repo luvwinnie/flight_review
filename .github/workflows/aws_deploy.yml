@@ -6,6 +6,7 @@ on:
     - 'sel_branch'
     types: [closed]
 
+# sel_branchに対するPRが閉じたら、Deployを実行する
 jobs:
   deploy:
     if: github.ref == 'refs/heads/sel_branch'
