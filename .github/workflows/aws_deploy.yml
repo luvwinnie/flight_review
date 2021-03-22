@@ -25,7 +25,7 @@ jobs:
           echo "$SECRET_KEY" > secret_key
           chmod 600 secret_key
           # SSH接続して、git pullする
-          ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && git pull origin sel_branch"
-          docker-compose -f docker-compose.prod.yml down
-          docker-compose -f docker-compose.prod.yml build --no-cache
-          docker-compose -f docker-compose.prod.yml up -d
+          ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && git checkout sel_branch && git pull origin sel_branch"
+          ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && docker-compose -f docker-compose.prod.yml down"
+          ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && docker-compose -f docker-compose.prod.yml build --no-cache"
+          ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && docker-compose -f docker-compose.prod.yml up -d"
