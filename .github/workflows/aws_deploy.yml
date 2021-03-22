@@ -12,33 +12,20 @@ jobs:
     if: github.ref == 'refs/heads/sel_branch'
     runs-on: ubuntu-latest
     steps:
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$PRIVATE_KEY" > ~/.ssh/deploy.key
-          chmod 600 ~/.ssh/deploy.key
-          cat >>~/.ssh/config <<END
-          Host ${HOST_NAME}
-            HostName $HOST_NAME
-            User $SSH_USER
-            IdentityFile ~/.ssh/deploy.key
-            StrictHostKeyChecking no
-          END
-        env:
-          SSH_USER: ${{ secrets.USER_NAME }}
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          HOST_NAME: ${{ secrets.HOST_NAME }}
-
       - uses: actions/checkout@v2
       - name: Deploy
         env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          # PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           USER_NAME: ${{ secrets.USER_NAME }}
           HOST_NAME: ${{ secrets.HOST_NAME }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
-          ssh -i ~/.ssh/deploy.key ${USER_NAME}@${HOST_NAME}
-          # ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME}
+          echo "$SECRET_KEY" > secret_key
+          chmod 600 secret_key
+          ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review"
           ls
+          # ssh -i ~/.ssh/deploy.key ${USER_NAME}@${HOST_NAME}
+          # ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME}
         
       #     # SSH接続して、git pullする
       #     echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
