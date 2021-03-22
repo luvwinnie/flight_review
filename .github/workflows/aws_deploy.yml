@@ -25,7 +25,7 @@ jobs:
           HOST_NAME: ${{ secrets.HOST_NAME }}
         run: |
           ls /home/runner/.ssh
-          ssh -o StrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME}
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${USER_NAME}@${HOST_NAME}
           ls
         
       #     # SSH接続して、git pullする
