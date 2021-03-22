@@ -21,7 +21,6 @@ jobs:
           USER_NAME: ${{ secrets.USER_NAME }}
           HOST_NAME: ${{ secrets.HOST_NAME }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          ENV_PROD: ${{ secrets.ENV_PROD }}
           DOMAIN: ${{ secrets.DOMAIN }}
           PORT: ${{ secrets.PORT }}
           CERT_PATH: ${{ secrets.CERT_PATH }}
@@ -29,11 +28,9 @@ jobs:
           NGINX_CONF: ${{ secrets.NGINX_CONF }}
         run: |
           echo "$SECRET_KEY" > secret_key
-          echo "$ENV_PROD" > .env_prod
           chmod 600 secret_key
           # SSH接続して、git pullする
           ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && git checkout sel_branch && git pull origin sel_branch"
           ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && docker-compose -f docker-compose.prod.yml down"
           ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && docker-compose -f docker-compose.prod.yml build --no-cache"
-          ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && echo ${ENV_PROD} > .env_prod"
-          ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && ls -lah && env && sh ./init-letsencrypt.sh"
+          ssh -oStrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i secret_key "cd ~/flight_review && sh ./init-letsencrypt.sh"
