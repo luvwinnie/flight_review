@@ -25,7 +25,7 @@ jobs:
           HOST_NAME: ${{ secrets.HOST_NAME }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh ${USER_NAME}@${HOST_NAME} -i private_key ${USER_NAME}@${HOST_NAME}
+          ssh -o StrictHostKeyChecking=no ${USER_NAME}@${HOST_NAME} -i private_key ${USER_NAME}@${HOST_NAME}
           ls
         
       #     # SSH接続して、git pullする
