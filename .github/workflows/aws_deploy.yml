@@ -26,8 +26,8 @@ jobs:
           END
         env:
           SSH_USER: ${{ secrets.USER_NAME }}
-          PRIVATE_KEY: ${{ secrets.STAGING_PRIVATE_KEY }}
-          HOST_NAME: ${{ secrets.STAGING_HOST_NAME }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          HOST_NAME: ${{ secrets.HOST_NAME }}
 
       - uses: actions/checkout@v2
       - name: Deploy
