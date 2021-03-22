@@ -14,10 +14,10 @@ jobs:
     steps:
       - name:
         uses: shimataro/ssh-key-action@v2
-          with:
-            key: ${{ secrets.PRIVATE_KEY }}
-            name: id_rsa
-            known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        with:
+          key: ${{ secrets.PRIVATE_KEY }}
+          name: id_rsa
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
       # - name: Deploy
       #   env:
       #     PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
